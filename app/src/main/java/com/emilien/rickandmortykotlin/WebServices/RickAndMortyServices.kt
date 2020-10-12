@@ -7,5 +7,5 @@ import retrofit2.Call
 
 interface RickAndMortyServices {
     @GET("characters")
-    fun getCharactersList(): Call<List<Example>>
+    fun getCharactersList(): Call<Example>
 }

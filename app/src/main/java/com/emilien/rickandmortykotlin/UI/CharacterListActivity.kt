@@ -16,6 +16,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 class CharacterListActivity : AppCompatActivity() {
     lateinit var service: RickAndMortyServices
     lateinit var dataset: MutableList<Result>
@@ -35,19 +36,24 @@ class CharacterListActivity : AppCompatActivity() {
         myAdapter = CharacterListAdapter(dataset)
         recyclerView.adapter = myAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
+        getData()
     }
 
     fun getData() {
         service.getCharactersList().enqueue(object : Callback<Example> {
-            override fun onResponse(call: Call<Example>, response: Response<Example>) {
-                if (response.isSuccessful()) {
-                    dataset.addAll(response.body().results)
+            override fun onResponse(
+                call: Call<Example>?,
+                p1: Response<Example>?
+            ) {
+                if (p1?.isSuccessful!!) {
+
+                    dataset.addAll(p1.body().results)
                     //pageTV.setText("Page $page")
                     myAdapter.notifyDataSetChanged()
                 }
             }
 
-            override fun onFailure(call: Call<Example>, throwable: Throwable) {}
+            override fun onFailure(p0: Call<Example>?, throwable: Throwable?) {}
         })
     }
 
