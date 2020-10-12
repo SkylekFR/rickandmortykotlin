@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">rickandmortykotlin</string>
+    <string name="character_list_title">Titre</string>
+</resources>
