@@ -11,8 +11,8 @@ import com.emilien.rickandmortykotlin.Entity.Result
 import com.emilien.rickandmortykotlin.R
 import com.squareup.picasso.Picasso
 
-class MyAdapter(private val myDataset: Array<Result>) :
-    RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class CharacterListAdapter(private val myDataset: MutableList<Result>) :
+    RecyclerView.Adapter<CharacterListAdapter.MyViewHolder>() {
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -36,7 +36,7 @@ class MyAdapter(private val myDataset: Array<Result>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): MyAdapter.MyViewHolder {
+    ): CharacterListAdapter.MyViewHolder {
         // create a new view
         val myView = LayoutInflater.from(parent.context)
             .inflate(R.layout.adapter_character_list, parent, false) as View
