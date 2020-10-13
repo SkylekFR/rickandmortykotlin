@@ -179,6 +179,9 @@ hs_err_pid*
 # NDK
 obj/
 
+#Credentials
+app/google-services.json
+
 # IntelliJ IDEA
 *.iws
 /out/

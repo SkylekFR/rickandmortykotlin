@@ -21,9 +21,9 @@ class CharacterListAdapter(private val myDataset: MutableList<Result>) :
 
 
 
-    class MyViewHolder constructor(val view: View) : RecyclerView.ViewHolder(view){
-        lateinit var titleTV: TextView
-        lateinit var iconIV: ImageView
+    class MyViewHolder constructor(view: View) : RecyclerView.ViewHolder(view){
+        var titleTV: TextView
+        var iconIV: ImageView
 
         init {
             this.titleTV = view.findViewById(R.id.character_list_adapter_title)

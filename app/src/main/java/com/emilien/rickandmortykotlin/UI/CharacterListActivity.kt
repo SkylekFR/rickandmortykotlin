@@ -1,6 +1,7 @@
 package com.emilien.rickandmortykotlin.UI
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,16 +46,21 @@ class CharacterListActivity : AppCompatActivity() {
                 call: Call<Example>?,
                 p1: Response<Example>?
             ) {
-                if (p1?.isSuccessful!!) {
-
+                if (p1?.isSuccessful == true) {
                     dataset.addAll(p1.body().results)
                     //pageTV.setText("Page $page")
                     myAdapter.notifyDataSetChanged()
+                } else {
+                    Log.e(TAG, "onResponse: ${p1?.errorBody()?.string()}")
                 }
             }
 
             override fun onFailure(p0: Call<Example>?, throwable: Throwable?) {}
         })
+    }
+
+    companion object {
+        private const val TAG = "CharacterListActivity"
     }
 
 //    fun goToNextPage(view: View?) {

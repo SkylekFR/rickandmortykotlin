@@ -1,11 +1,20 @@
 package com.emilien.rickandmortykotlin.WebServices
 
-import retrofit2.http.GET
 import com.emilien.rickandmortykotlin.Entity.Example
+import com.emilien.rickandmortykotlin.Entity.Result
 import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 interface RickAndMortyServices {
-    @GET("characters")
+    @GET("character")
     fun getCharactersList(): Call<Example>
+
+    @GET("character")
+    fun getCharacterListFromPage(@Query("page") page: Int): Call<Example>
+
+    @GET("character/{character}")
+    fun getCharacterFromId(@Path("character") results: Result): Call<List<Result>>
 }
