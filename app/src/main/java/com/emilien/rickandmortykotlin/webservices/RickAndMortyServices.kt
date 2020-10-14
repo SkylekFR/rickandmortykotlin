@@ -1,7 +1,7 @@
-package com.emilien.rickandmortykotlin.WebServices
+package com.emilien.rickandmortykotlin.webservices
 
-import com.emilien.rickandmortykotlin.Entity.Example
-import com.emilien.rickandmortykotlin.Entity.Result
+import com.emilien.rickandmortykotlin.entities.Example
+import com.emilien.rickandmortykotlin.entities.Result
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

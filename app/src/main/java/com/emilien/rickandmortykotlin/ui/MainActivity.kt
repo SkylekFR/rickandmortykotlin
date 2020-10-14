@@ -1,10 +1,11 @@
-package com.emilien.rickandmortykotlin.UI
+package com.emilien.rickandmortykotlin.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -32,10 +33,17 @@ class MainActivity : AppCompatActivity() {
     lateinit var infoTv: TextView
     lateinit var disconnectButton: Button
     lateinit var registerButton: Button
-    lateinit var emailTextView: TextView
-    lateinit var passwordTextView: TextView
+    lateinit var emailEditText: EditText
+    lateinit var passwordEditText: EditText
+    lateinit var registerEmailEditText: EditText
+    lateinit var registerPasswordEditText: EditText
     lateinit var connectButton: Button
     private lateinit var auth: FirebaseAuth
+
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,19 +53,19 @@ class MainActivity : AppCompatActivity() {
         infoTv = findViewById(R.id.activity_main_infoTv)
         disconnectButton = findViewById(R.id.activity_main_disconnectButton)
         registerButton = findViewById(R.id.activity_main_registerButton)
-        emailTextView = findViewById(R.id.activity_main_emailInputTextView)
-        passwordTextView = findViewById(R.id.activity_main_passwordInputTextView)
+        emailEditText = findViewById(R.id.activity_main_emailEditText)
+        passwordEditText = findViewById(R.id.activity_main_passwordEditText)
+        registerEmailEditText = findViewById(R.id.activity_main_registerEmailEditText)
+        registerPasswordEditText = findViewById(R.id.activity_main_registerPasswordEditText)
         connectButton = findViewById(R.id.activity_main_connectButton)
-        signinBtn.setOnClickListener(clickListener)
         gotoappBtn.visibility = View.GONE
         gotoappBtn.text = "Start"
-        gotoappBtn.setOnClickListener(clickListener)
-
+        attachListeners()
     }
 
-    private fun signIn() {
-        val signInIntent = GoogleSignIn.getClient(this, gso).signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+    override fun onStart() {
+        super.onStart()
+        updateUI(auth.currentUser)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -79,12 +87,110 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        updateUI(currentUser)
+    private fun attachListeners() {
+        signinBtn.setOnClickListener(clickListener)
+        gotoappBtn.setOnClickListener(clickListener)
+        connectButton.setOnClickListener(clickListener)
+        disconnectButton.setOnClickListener(clickListener)
+        registerButton.setOnClickListener(clickListener)
     }
+
+    private fun updateUI(currentUser: FirebaseUser?) {
+        if (currentUser == null) {
+            /// disconnected
+           infoTv.setText("You need to connect to use the app")
+            signinBtn.visibility = View.VISIBLE
+            gotoappBtn.visibility = View.GONE
+            emailEditText.isEnabled = true
+            passwordEditText.isEnabled = true
+            connectButton.isEnabled = true
+            disconnectButton.isEnabled = false
+            registerButton.isEnabled = true
+
+        }
+        else{
+            /// connected
+            infoTv.setText("Welcome ${auth.currentUser?.email}")
+            signinBtn.visibility = View.GONE
+            gotoappBtn.visibility = View.VISIBLE
+            emailEditText.isEnabled = false
+            passwordEditText.isEnabled = false
+            connectButton.isEnabled = false
+            disconnectButton.isEnabled = true
+            registerButton.isEnabled = false
+        }
+    }
+    val clickListener = View.OnClickListener { view ->
+
+        when (view.getId()) {
+            R.id.activity_main_gotoappBtn -> startCharacterListActivity()
+            R.id.activity_main_signinBtn -> signIn()
+            R.id.activity_main_disconnectButton -> disconnect()
+            R.id.activity_main_connectButton -> connect()
+            R.id.activity_main_registerButton -> register(registerEmailEditText.text.toString(), registerPasswordEditText.text.toString())
+        }
+    }
+
+    private fun startCharacterListActivity() {
+        val intent = Intent(this, CharacterListActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun disconnect() {
+            FirebaseAuth.getInstance().signOut()
+            updateUI(null);
+    }
+    private fun connect() {
+        if(!emailEditText.text.isEmpty() && !passwordEditText.text.isEmpty()) {
+            auth.signInWithEmailAndPassword(emailEditText.text.toString(), passwordEditText.text.toString()).addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "connectedWithEmail:success")
+                    val user = auth.currentUser
+                    updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                    updateUI(null)
+                }
+
+                // ...
+            }
+        }
+    }
+
+    private fun register(email: String, password: String) {
+        if(!email.isEmpty() && !password.isEmpty()) {
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "createUserWithEmail:success")
+                        val user = auth.currentUser
+                        Toast.makeText(baseContext, "You successfully created your account. You're now connected",
+                            Toast.LENGTH_SHORT).show()
+                        updateUI(user)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                        Toast.makeText(baseContext, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show()
+                        updateUI(null)
+                    }
+                }
+        }
+    }
+
+    private fun signIn() {
+        val signInIntent = GoogleSignIn.getClient(this, gso).signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+
+
+
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
@@ -108,81 +214,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun updateUI(currentUser: FirebaseUser?) {
-        if (currentUser == null) {
-           infoTv.setText("You need to connect to use the app")
-            signinBtn.visibility = View.VISIBLE
-            gotoappBtn.visibility = View.GONE
-
-        }
-        else{
-            infoTv.setText("Welcome ${auth.currentUser?.email}")
-            signinBtn.visibility = View.GONE
-            gotoappBtn.visibility = View.VISIBLE
-        }
-    }
-    val clickListener = View.OnClickListener { view ->
-
-        when (view.getId()) {
-            R.id.activity_main_gotoappBtn -> startCharacterListActivity()
-            R.id.activity_main_signinBtn -> signIn()
-            R.id.activity_main_disconnectButton -> disconnect()
-            R.id.activity_main_connectButton -> connect()
-            R.id.activity_main_registerButton -> register("c'est en dur", "c dur")
-        }
-    }
-
-    private fun startCharacterListActivity() {
-        val intent = Intent(this, CharacterListActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun disconnect() {
-            FirebaseAuth.getInstance().signOut()
-            updateUI(null);
-    }
-    private fun connect() {
-        auth.signInWithEmailAndPassword(emailTextView.text.toString(), passwordTextView.text.toString()).addOnCompleteListener(this) { task ->
-            if (task.isSuccessful) {
-                // Sign in success, update UI with the signed-in user's information
-                Log.d(TAG, "connectedWithEmail:success")
-                val user = auth.currentUser
-                updateUI(user)
-            } else {
-                // If sign in fails, display a message to the user.
-                Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                Toast.makeText(baseContext, "Authentication failed.",
-                    Toast.LENGTH_SHORT).show()
-                updateUI(null)
-            }
-
-            // ...
-        }
-
-    }
-
-    private fun register(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success")
-                    val user = auth.currentUser
-                    updateUI(user)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
-                    updateUI(null)
-                }
-
-                // ...
-            }
-    }
-    companion object {
-        private const val TAG = "MainActivity"
-    }
 
 
 

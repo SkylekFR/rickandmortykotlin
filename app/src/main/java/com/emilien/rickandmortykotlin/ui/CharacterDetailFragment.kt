@@ -1,4 +1,4 @@
-package com.emilien.rickandmortykotlin.UI
+package com.emilien.rickandmortykotlin.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -9,10 +9,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.emilien.rickandmortykotlin.Entity.Result
+import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
-import com.emilien.rickandmortykotlin.WebServices.RickAndMortyServices
+import com.emilien.rickandmortykotlin.webservices.RickAndMortyServices
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,7 +47,6 @@ class CharacterDetailFragment() : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_character_detail, container, false)
-
     }
 
     override fun onAttach(context: Context) {
@@ -63,8 +63,6 @@ class CharacterDetailFragment() : Fragment() {
                 this.putInt("CharacterID", id)
             }
         }
-
-
         private const val TAG = "CharacterListActivity"
     }
 
@@ -104,10 +102,13 @@ class CharacterDetailFragment() : Fragment() {
 
                     Picasso.get().load(response.body().image).into(iconImageView)
                 }
+                else {
+                    Toast.makeText(context, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onFailure(p0: Call<Result>?, p1: Throwable?) {
-                TODO("Not yet implemented")
+                Toast.makeText(context, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
             }
 
         })

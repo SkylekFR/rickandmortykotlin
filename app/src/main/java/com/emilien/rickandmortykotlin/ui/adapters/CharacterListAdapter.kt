@@ -1,4 +1,4 @@
-package com.emilien.rickandmortykotlin.UI.Adapters
+package com.emilien.rickandmortykotlin.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.emilien.rickandmortykotlin.Entity.Result
+import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
-import com.emilien.rickandmortykotlin.UI.CharacterDetailFragment
-import com.emilien.rickandmortykotlin.UI.CharacterListActivity
+import com.emilien.rickandmortykotlin.ui.CharacterDetailFragment
+import com.emilien.rickandmortykotlin.ui.CharacterListActivity
 import com.squareup.picasso.Picasso
 
 class CharacterListAdapter(private val myDataset: MutableList<Result>) :

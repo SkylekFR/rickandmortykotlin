@@ -1,4 +1,4 @@
-package com.emilien.rickandmortykotlin.Entity
+package com.emilien.rickandmortykotlin.entities
 
 data class Result(
     val created: String,

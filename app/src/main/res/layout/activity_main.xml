@@ -5,47 +5,54 @@
     android:id="@+id/activity_main_parentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.MainActivity">
+    tools:context=".ui.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/activity_main_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:background="@drawable/cartouche2"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19">
+        app:layout_constraintVertical_bias="0.01999998">
 
         <EditText
-            android:id="@+id/activity_main_emailInputTextView"
+            android:id="@+id/activity_main_emailEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="email"
+            android:inputType="textEmailAddress"
             android:maxLines="1"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="#FFFFFFFF"
+            android:textColorHint="#BDBCBC"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_main_gotoappBtn"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_main_gotoappBtn" />
+
         <EditText
-            android:id="@+id/activity_main_passwordInputTextView"
+            android:id="@+id/activity_main_passwordEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="password"
+            android:inputType="textPassword"
             android:maxLines="1"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="#FFFFFFFF"
+            android:textColorHint="#BDBCBC"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_main_emailInputTextView"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_main_emailEditText" />
+
         <TextView
             android:id="@+id/activity_main_infoTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:gravity="center"
             android:ems="15"
+            android:gravity="center"
             android:text="Hello World!"
             android:textColor="#FFFFFFFF"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -61,14 +68,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/activity_main_connectButton" />
+
         <Button
             android:id="@+id/activity_main_connectButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Connect"
+            app:layout_constraintEnd_toStartOf="@id/activity_main_disconnectButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_main_passwordInputTextView"/>
+            app:layout_constraintTop_toBottomOf="@id/activity_main_passwordEditText" />
+
         <Button
             android:id="@+id/activity_main_gotoappBtn"
             android:layout_width="0dp"
@@ -77,35 +86,62 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="@drawable/cartouche2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_main_container">
-
-        <Button
-            android:id="@+id/activity_main_registerButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="Disconnect"
-            app:layout_constraintTop_toTopOf="parent" />
         <Button
             android:id="@+id/activity_main_disconnectButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="Disconnect"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/activity_main_connectButton"
+            app:layout_constraintTop_toBottomOf="@id/activity_main_passwordEditText" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cartouche2"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/activity_main_container"
+        app:layout_constraintStart_toStartOf="@+id/activity_main_container"
+        app:layout_constraintTop_toBottomOf="@+id/activity_main_container">
+
+        <Button
+            android:id="@+id/activity_main_registerButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Register"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_main_registerButton"
+            app:layout_constraintTop_toBottomOf="@id/activity_main_registerPasswordEditText" />
+
+
+        <EditText
+            android:id="@+id/activity_main_registerEmailEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="email"
+            android:textColorHint="#BDBCBC"
+            android:textColor="#FFFFFFFF"
+            android:inputType="textEmailAddress"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
+        <EditText
+            android:id="@+id/activity_main_registerPasswordEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="password"
+            android:textColorHint="#BDBCBC"
+            android:textColor="#FFFFFFFF"
+            android:inputType="textPassword"
+            app:layout_constraintTop_toBottomOf="@id/activity_main_registerEmailEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

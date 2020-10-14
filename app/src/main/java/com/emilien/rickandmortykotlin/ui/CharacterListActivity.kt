@@ -1,19 +1,19 @@
-package com.emilien.rickandmortykotlin.UI
+package com.emilien.rickandmortykotlin.ui
 
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.emilien.rickandmortykotlin.Entity.Example
-import com.emilien.rickandmortykotlin.Entity.Info
-import com.emilien.rickandmortykotlin.Entity.Result
+import com.emilien.rickandmortykotlin.entities.Example
+import com.emilien.rickandmortykotlin.entities.Info
+import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
-import com.emilien.rickandmortykotlin.UI.Adapters.CharacterListAdapter
-import com.emilien.rickandmortykotlin.WebServices.RickAndMortyServices
-import com.google.android.material.internal.ContextUtils.getActivity
+import com.emilien.rickandmortykotlin.ui.adapters.CharacterListAdapter
+import com.emilien.rickandmortykotlin.webservices.RickAndMortyServices
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -64,10 +64,13 @@ class CharacterListActivity : AppCompatActivity() {
                     myAdapter.notifyDataSetChanged()
                 } else {
                     Log.e(TAG, "onResponse: ${p1.errorBody().string()}")
+                    Toast.makeText(baseContext, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            override fun onFailure(p0: Call<Example>?, throwable: Throwable?) {}
+            override fun onFailure(p0: Call<Example>?, throwable: Throwable?) {
+                Toast.makeText(baseContext, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
+            }
         })
     }
 
@@ -81,9 +84,14 @@ class CharacterListActivity : AppCompatActivity() {
                         pageTV.setText("Page $page")
                         myAdapter.notifyDataSetChanged()
                     }
+                    else {
+                        Toast.makeText(baseContext, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
-                override fun onFailure(call: Call<Example>, throwable: Throwable) {}
+                override fun onFailure(call: Call<Example>, throwable: Throwable) {
+                    Toast.makeText(baseContext, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
+                }
             })
         }
     }
@@ -104,9 +112,14 @@ class CharacterListActivity : AppCompatActivity() {
                         pageTV.setText("Page $page")
                         myAdapter.notifyDataSetChanged()
                     }
+                    else {
+                        Toast.makeText(baseContext, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
-                override fun onFailure(call: Call<Example>, throwable: Throwable) {}
+                override fun onFailure(call: Call<Example>, throwable: Throwable) {
+                    Toast.makeText(baseContext, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
+                }
             })
         }
     }
