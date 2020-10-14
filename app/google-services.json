@@ -14,7 +14,8 @@
         }
       },
       "oauth_client": [
-        {           "client_id": "215644384276-mf982ie1q7253io3d9j9jnq1cs44e7i4.apps.googleusercontent.com",
+        {
+          "client_id": "215644384276-mf982ie1q7253io3d9j9jnq1cs44e7i4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.emilien.lpptut",
