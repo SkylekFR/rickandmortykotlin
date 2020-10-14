@@ -6,52 +6,66 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.emilien.rickandmortykotlin.Entity.Example
 import com.emilien.rickandmortykotlin.Entity.Result
 import com.emilien.rickandmortykotlin.R
+import com.emilien.rickandmortykotlin.UI.CharacterDetailFragment
+import com.emilien.rickandmortykotlin.UI.CharacterListActivity
 import com.squareup.picasso.Picasso
 
 class CharacterListAdapter(private val myDataset: MutableList<Result>) :
-    RecyclerView.Adapter<CharacterListAdapter.MyViewHolder>() {
+    RecyclerView.Adapter<CharacterListAdapter.CharacterHolder>() {
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder.
     // Each data item is just a string in this case that is shown in a TextView.
+    class CharacterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(text: String, image: String) {
+            itemView.findViewById<TextView>(R.id.character_list_adapter_title).text =
+                text
+            Picasso.get().load(image)
+                .into(itemView.findViewById<ImageView>(R.id.character_list_adapter_icon))
+        }
 
-
-
-    class MyViewHolder constructor(view: View) : RecyclerView.ViewHolder(view){
-        var titleTV: TextView
-        var iconIV: ImageView
-
-        init {
-            this.titleTV = view.findViewById(R.id.character_list_adapter_title)
-            this.iconIV = view.findViewById(R.id.character_list_adapter_icon)
+        companion object {
+            fun newInstance(parent: ViewGroup) = CharacterHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.adapter_character_list, parent, false)
+            )
         }
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterHolder =
+        CharacterHolder.newInstance(parent)
 
-    // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): CharacterListAdapter.MyViewHolder {
-        // create a new view
-        val myView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.adapter_character_list, parent, false) as View
-        // set the view's size, margins, paddings and layout parameters
-        return MyViewHolder(myView)
+
+    override fun onBindViewHolder(holder: CharacterHolder, position: Int) {
+        holder.bind(myDataset[position].name, myDataset[position].image)
+        holder.itemView.setOnClickListener {
+            val transaction =
+                (it.context as CharacterListActivity).supportFragmentManager.beginTransaction()
+            transaction.setCustomAnimations(
+                android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right,
+                android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right
+            )
+                .replace(R.id.container, CharacterDetailFragment.newInstance(myDataset[position].id))
+                .addToBackStack("DetailedCharacter")
+                .commit()
+        }
+
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.titleTV.text = myDataset[position].name
-        Picasso.get().load(myDataset.get(position).image).into(holder.iconIV)
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = myDataset.size
+    override fun getItemCount(): Int = myDataset.size
 }
+
+
+
+
+
+
+
+
+
+
