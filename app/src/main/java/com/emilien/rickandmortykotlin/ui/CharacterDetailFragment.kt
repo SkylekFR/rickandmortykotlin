@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
+import com.emilien.rickandmortykotlin.webservices.NetworkManager
 import com.emilien.rickandmortykotlin.webservices.RickAndMortyServices
 import com.squareup.picasso.Picasso
 import retrofit2.Call
@@ -32,13 +33,13 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class CharacterDetailFragment() : Fragment() {
-    lateinit var service: RickAndMortyServices
     lateinit var nameTextView: TextView
     lateinit var speciesTextView: TextView
     lateinit var typeTextView: TextView
     lateinit var genderTextView: TextView
     lateinit var iconImageView: ImageView
     lateinit var popFragmentButton: Button
+    val networkManager = NetworkManager.rickMortyService
     var characterId = 0
 
     override fun onCreateView(
@@ -78,17 +79,11 @@ class CharacterDetailFragment() : Fragment() {
         popFragmentButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://rickandmortyapi.com/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        service = retrofit.create<RickAndMortyServices>(RickAndMortyServices::class.java)
-
         getData()
     }
 
     fun getData() {
-        service.getCharacterFromId(characterId).enqueue(object : Callback<Result> {
+        networkManager.getCharacterFromId(characterId).enqueue(object : Callback<Result> {
             override fun onResponse(call: Call<Result>?, response: Response<Result>?) {
                 if (response?.isSuccessful == true) {
                     nameTextView.text = response.body().name
