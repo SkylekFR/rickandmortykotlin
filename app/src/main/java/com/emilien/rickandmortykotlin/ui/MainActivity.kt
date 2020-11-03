@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.emilien.rickandmortykotlin.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -53,11 +52,11 @@ class MainActivity : Activity() {
         signinBtn = findViewById(R.id.activity_main_signinBtn)
         infoTv = findViewById(R.id.activity_main_infoTv)
         disconnectButton = findViewById(R.id.activity_main_disconnectButton)
-        registerButton = findViewById(R.id.activity_main_registerButton)
+        registerButton = findViewById(R.id.fragment_registration_registerButton)
         emailEditText = findViewById(R.id.activity_main_emailEditText)
         passwordEditText = findViewById(R.id.activity_main_passwordEditText)
-        registerEmailEditText = findViewById(R.id.activity_main_registerEmailEditText)
-        registerPasswordEditText = findViewById(R.id.activity_main_registerPasswordEditText)
+        registerEmailEditText = findViewById(R.id.fragment_registration_registerEmailEditText)
+        registerPasswordEditText = findViewById(R.id.fragment_registration_registerPasswordEditText)
         connectButton = findViewById(R.id.activity_main_connectButton)
         gotoappBtn.visibility = View.GONE
         gotoappBtn.text = "Start"
@@ -128,7 +127,7 @@ class MainActivity : Activity() {
             R.id.activity_main_signinBtn -> signIn()
             R.id.activity_main_disconnectButton -> disconnect()
             R.id.activity_main_connectButton -> connect()
-            R.id.activity_main_registerButton -> register(registerEmailEditText.text.toString(), registerPasswordEditText.text.toString())
+            R.id.fragment_registration_registerButton -> register(registerEmailEditText.text.toString(), registerPasswordEditText.text.toString())
         }
     }
 
