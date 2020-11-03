@@ -13,6 +13,7 @@ import com.emilien.rickandmortykotlin.entities.Info
 import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
 import com.emilien.rickandmortykotlin.ui.adapters.CharacterListAdapter
+import com.emilien.rickandmortykotlin.webservices.NetworkManager
 import com.emilien.rickandmortykotlin.webservices.RickAndMortyServices
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,11 +36,8 @@ class CharacterListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_list)
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://rickandmortyapi.com/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        service = retrofit.create<RickAndMortyServices>(RickAndMortyServices::class.java)
+
+        service = NetworkManager.rickMortyService
         dataset = mutableListOf()
         recyclerView = findViewById(R.id.character_list_recyclerView)
         pageTV = findViewById<TextView>(R.id.character_list_page_tV)

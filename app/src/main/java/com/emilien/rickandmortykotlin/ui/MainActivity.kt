@@ -1,5 +1,6 @@
 package com.emilien.rickandmortykotlin.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -21,7 +22,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
     val RC_SIGN_IN = 1001
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestIdToken("215644384276-7rg4bb2ha8jre38hsj3s9gmt1m61747b.apps.googleusercontent.com")
