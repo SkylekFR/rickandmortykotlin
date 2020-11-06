@@ -9,7 +9,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.emilien.rickandmortykotlin.R
+import com.emilien.rickandmortykotlin.ui.registration.RegistrationFragment
+import com.emilien.rickandmortykotlin.webservices.AuthManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
@@ -21,7 +25,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
     val RC_SIGN_IN = 1001
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestIdToken("215644384276-7rg4bb2ha8jre38hsj3s9gmt1m61747b.apps.googleusercontent.com")
@@ -32,13 +36,12 @@ class MainActivity : Activity() {
     lateinit var signinBtn: SignInButton
     lateinit var infoTv: TextView
     lateinit var disconnectButton: Button
-    lateinit var registerButton: Button
+
     lateinit var emailEditText: EditText
     lateinit var passwordEditText: EditText
-    lateinit var registerEmailEditText: EditText
-    lateinit var registerPasswordEditText: EditText
+    lateinit var gotoRegistrationButton: Button
     lateinit var connectButton: Button
-    private lateinit var auth: FirebaseAuth
+    val auth = AuthManager.auth
 
     companion object {
         private const val TAG = "MainActivity"
@@ -47,19 +50,16 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        auth = Firebase.auth
         gotoappBtn = findViewById(R.id.activity_main_gotoappBtn)
         signinBtn = findViewById(R.id.activity_main_signinBtn)
         infoTv = findViewById(R.id.activity_main_infoTv)
         disconnectButton = findViewById(R.id.activity_main_disconnectButton)
-        registerButton = findViewById(R.id.fragment_registration_registerButton)
         emailEditText = findViewById(R.id.activity_main_emailEditText)
         passwordEditText = findViewById(R.id.activity_main_passwordEditText)
-        registerEmailEditText = findViewById(R.id.fragment_registration_registerEmailEditText)
-        registerPasswordEditText = findViewById(R.id.fragment_registration_registerPasswordEditText)
         connectButton = findViewById(R.id.activity_main_connectButton)
         gotoappBtn.visibility = View.GONE
         gotoappBtn.text = "Start"
+        gotoRegistrationButton = findViewById(R.id.activity_main_gotoRegistrationButton)
         attachListeners()
     }
 
@@ -92,7 +92,8 @@ class MainActivity : Activity() {
         gotoappBtn.setOnClickListener(clickListener)
         connectButton.setOnClickListener(clickListener)
         disconnectButton.setOnClickListener(clickListener)
-        registerButton.setOnClickListener(clickListener)
+        gotoRegistrationButton.setOnClickListener(clickListener)
+
     }
 
     private fun updateUI(currentUser: FirebaseUser?) {
@@ -105,7 +106,7 @@ class MainActivity : Activity() {
             passwordEditText.isEnabled = true
             connectButton.isEnabled = true
             disconnectButton.isEnabled = false
-            registerButton.isEnabled = true
+
 
         }
         else{
@@ -117,7 +118,7 @@ class MainActivity : Activity() {
             passwordEditText.isEnabled = false
             connectButton.isEnabled = false
             disconnectButton.isEnabled = true
-            registerButton.isEnabled = false
+
         }
     }
     val clickListener = View.OnClickListener { view ->
@@ -127,7 +128,8 @@ class MainActivity : Activity() {
             R.id.activity_main_signinBtn -> signIn()
             R.id.activity_main_disconnectButton -> disconnect()
             R.id.activity_main_connectButton -> connect()
-            R.id.fragment_registration_registerButton -> register(registerEmailEditText.text.toString(), registerPasswordEditText.text.toString())
+            R.id.activity_main_gotoRegistrationButton -> goToRegistration()
+
         }
     }
 
@@ -161,45 +163,22 @@ class MainActivity : Activity() {
         }
     }
 
-    private fun register(email: String, password: String) {
-        if(!email.isEmpty() && !password.isEmpty()) {
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success")
-                        val user = auth.currentUser
-                        Toast.makeText(baseContext, "You successfully created your account. You're now connected",
-                            Toast.LENGTH_SHORT).show()
-                        updateUI(user)
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show()
-                        updateUI(null)
-                    }
-                }
-        }
+    private fun goToRegistration() {
+       supportFragmentManager.beginTransaction()
+           .replace(R.id.activity_main_registrationContainer, RegistrationFragment.newInstance())
+           .addToBackStack("registrationFragment")
+           .commit()
+
     }
-
-    private fun signIn() {
-        val signInIntent = GoogleSignIn.getClient(this, gso).signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
-
-
-
-
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
+        AuthManager.auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("FirebaseAuth", "signInWithCredential:success")
-                    val user = auth.currentUser
+                    val user = AuthManager.auth.currentUser
                     updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.
@@ -212,6 +191,17 @@ class MainActivity : Activity() {
                 // ...
             }
     }
+
+    private fun signIn() {
+        val signInIntent = GoogleSignIn.getClient(this, gso).signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+
+
+
+
+
 
 
 
