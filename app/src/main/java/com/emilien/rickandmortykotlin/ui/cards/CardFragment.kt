@@ -1,4 +1,4 @@
-package com.emilien.rickandmortykotlin.ui
+package com.emilien.rickandmortykotlin.ui.cards
 
 import android.content.Context
 import android.os.Bundle
@@ -14,13 +14,10 @@ import androidx.fragment.app.Fragment
 import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
 import com.emilien.rickandmortykotlin.webservices.NetworkManager
-import com.emilien.rickandmortykotlin.webservices.RickAndMortyServices
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,7 +56,8 @@ class CharacterDetailFragment() : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(id: Int) = CharacterDetailFragment().apply {
+        fun newInstance(id: Int) = CharacterDetailFragment()
+            .apply {
             this.arguments = Bundle().apply {
                 this.putInt("CharacterID", id)
             }
