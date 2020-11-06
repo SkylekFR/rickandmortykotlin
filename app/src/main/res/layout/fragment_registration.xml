@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_registration_frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:background="@drawable/cartouche2"
+    android:padding="32dp"
+    tools:context=".ui.registration.RegistrationFragment">
+
+    <TextView
+        android:id="@+id/fragment_registration_titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_registration_title"
+        android:textSize="32sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        />
+
+    <EditText
+        android:id="@+id/fragment_registration_registerEmailEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/fragment_registration_email"
+        android:inputType="textEmailAddress"
+        android:textColor="#FFFFFFFF"
+        android:textColorHint="#BDBCBC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_registration_registerPasswordEditText" />
+
+    <Button
+        android:id="@+id/fragment_registration_registerButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/fragment_registration_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_registration_registerEmailEditText" />
+
+    <EditText
+        android:id="@+id/fragment_registration_registerPasswordEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/fragment_registration_password"
+        android:inputType="textPassword"
+        android:textColor="#FFFFFFFF"
+        android:textColorHint="#BDBCBC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_registration_titleTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

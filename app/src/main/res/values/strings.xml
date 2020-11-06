@@ -3,4 +3,9 @@
     <string name="character_list_title">Character list</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_registration_button">Register</string>
+    <string name="fragment_registration_password">password</string>
+    <string name="fragment_registration_email">email</string>
+    <string name="fragment_registration_title">Register</string>
+    <string name="activity_main_title">Welcome in the Rick And Morty App</string>
 </resources>
