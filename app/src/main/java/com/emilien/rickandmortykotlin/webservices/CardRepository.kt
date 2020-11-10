@@ -16,27 +16,22 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.coroutines.coroutineContext
 
-object NetworkManager {
+object CardRepository {
     //Creating Auth Interceptor to add api_key query in front of all the requests.
-    private val baseURL = "https://rickandmortyapi.com/api/"
-    
-    private fun retrofit(): Retrofit = Retrofit.Builder()
-        .baseUrl(baseURL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    val factory = ApiFactory.rickMortyService
 
-    private val rickMortyService: RickAndMortyServices = retrofit().create(RickAndMortyServices::class.java)
+    val cardList = MutableLiveData<List<Result>>()
+    val error = MutableLiveData<String>()
 
 
-   fun getCardList() : MutableLiveData<Example> {
-       val example = MutableLiveData<Example>()
-       rickMortyService.getCharactersList().enqueue(object : Callback<Example> {
+   fun fetchCardList() {
+       factory.getCharactersList().enqueue(object : Callback<Example> {
             override fun onResponse(
                 call: Call<Example>,
                 p1: Response<Example>
             ) {
                 if (p1.isSuccessful) {
-                   example.value = p1.body()
+                   cardList.value = p1.body().results
                 } else {
                     Log.e("NetworkManager", "onResponse: ${p1.errorBody().string()}")
                     //Toast.makeText(, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
@@ -47,7 +42,7 @@ object NetworkManager {
                 //Toast.makeText(baseContext, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
             }
         })
-       return example
+
 
     }
 }

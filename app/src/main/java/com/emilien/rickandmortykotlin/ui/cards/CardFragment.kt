@@ -13,11 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
-import com.emilien.rickandmortykotlin.webservices.NetworkManager
-import com.squareup.picasso.Picasso
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.emilien.rickandmortykotlin.webservices.CardRepository
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,15 +25,15 @@ private const val ARG_PARAM2 = "param2"
  * Use the [CharacterDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CharacterDetailFragment() : Fragment() {
+class CardFragment() : Fragment() {
     lateinit var nameTextView: TextView
     lateinit var speciesTextView: TextView
     lateinit var typeTextView: TextView
     lateinit var genderTextView: TextView
     lateinit var iconImageView: ImageView
     lateinit var popFragmentButton: Button
-    val networkManager = NetworkManager.rickMortyService
     var characterId = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +52,7 @@ class CharacterDetailFragment() : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(id: Int) = CharacterDetailFragment()
+        fun newInstance(id: Int) = CardFragment()
             .apply {
             this.arguments = Bundle().apply {
                 this.putInt("CharacterID", id)
@@ -77,37 +73,10 @@ class CharacterDetailFragment() : Fragment() {
         popFragmentButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
-        getData()
+        CardRepository.cardList.value?.get(characterId)
     }
 
-    fun getData() {
-        networkManager.getCharacterFromId(characterId).enqueue(object : Callback<Result> {
-            override fun onResponse(call: Call<Result>?, response: Response<Result>?) {
-                if (response?.isSuccessful == true) {
-                    nameTextView.text = response.body().name
-                    speciesTextView.text = response.body().species
-                    genderTextView.text = response.body().gender
-                    if(!response.body().type.equals("")) {
-                        typeTextView.text = response.body().type
-                    }else {
-                        typeTextView.text = "Unknown type"
-                    }
 
-                    Picasso.get().load(response.body().image).into(iconImageView)
-                }
-                else {
-                    Toast.makeText(context, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(p0: Call<Result>?, p1: Throwable?) {
-                Toast.makeText(context, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
-            }
-
-        })
-
-
-    }
 
 
 

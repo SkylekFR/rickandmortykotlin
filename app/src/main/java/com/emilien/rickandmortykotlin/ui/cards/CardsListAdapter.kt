@@ -10,7 +10,7 @@ import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
 import com.squareup.picasso.Picasso
 
-class CardsListAdapter(private val myDataset: MutableList<Result>) :
+class CardsListAdapter() :
     RecyclerView.Adapter<CardsListAdapter.CharacterHolder>() {
 
     // Provide a reference to the views for each data item
@@ -18,7 +18,8 @@ class CardsListAdapter(private val myDataset: MutableList<Result>) :
     // you provide access to all the views for a data item in a view holder.
     // Each data item is just a string in this case that is shown in a TextView.
 
-    val dataset: List<Result>
+    private var myDataset = emptyList<Result>()
+
     class CharacterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(text: String, image: String) {
             itemView.findViewById<TextView>(R.id.character_list_adapter_title).text =
@@ -53,7 +54,7 @@ class CardsListAdapter(private val myDataset: MutableList<Result>) :
                 android.R.anim.slide_in_left,
                 android.R.anim.slide_out_right
             )
-                .replace(R.id.container, CharacterDetailFragment.newInstance(myDataset[position].id))
+                .replace(R.id.container, CardFragment.newInstance(myDataset[position].id))
                 .addToBackStack("DetailedCharacter")
                 .commit()
         }
@@ -61,7 +62,7 @@ class CardsListAdapter(private val myDataset: MutableList<Result>) :
     }
 
     fun setData(listCard : List<Result>) {
-        dataset = listCard
+        myDataset = listCard
         notifyDataSetChanged()
     }
 

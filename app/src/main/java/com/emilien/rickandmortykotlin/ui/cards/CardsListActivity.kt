@@ -1,30 +1,19 @@
 package com.emilien.rickandmortykotlin.ui.cards
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emilien.rickandmortykotlin.entities.Example
 import com.emilien.rickandmortykotlin.entities.Info
-import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
-import com.emilien.rickandmortykotlin.webservices.NetworkManager
-import com.emilien.rickandmortykotlin.webservices.RickAndMortyServices
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class CardsListActivity : AppCompatActivity() {
-    lateinit var service: RickAndMortyServices
-    var dataset = MutableLiveData<Example>()
-    lateinit var myAdapter: CardsListAdapter
+    var myAdapter = CardsListAdapter()
     lateinit var recyclerView: RecyclerView
     lateinit var infos: Info
     var page: Int = 1
@@ -36,13 +25,17 @@ class CardsListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_character_list)
 
 
+        val cardViewModel = CardViewModel()
 
-        dataset = NetworkManager.getCardList()
 
         recyclerView = findViewById(R.id.character_list_recyclerView)
         pageTV = findViewById<TextView>(R.id.character_list_page_tV)
         titleTV = findViewById<TextView>(R.id.character_list_title)
-        myAdapter = CardsListAdapter(dataset)
+        cardViewModel.loadCardsFromRepository()
+        cardViewModel.getCards().observe(this, Observer {
+            myAdapter.setData(it)
+        })
+        myAdapter = CardsListAdapter()
         recyclerView.adapter = myAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -77,9 +70,9 @@ class CardsListActivity : AppCompatActivity() {
         private const val TAG = "CharacterListActivity"
     }
 
-    private val changeObserver = Observer<Example> { value ->
+    /*private val changeObserver = Observer<Example> { value ->
         value?.let { txt_fragment.text = it }
-    }
+    }*/
 
 
     /*fun getNextPage(view: View) {
