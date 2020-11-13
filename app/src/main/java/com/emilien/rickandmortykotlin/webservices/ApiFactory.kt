@@ -1,13 +1,13 @@
 package com.emilien.rickandmortykotlin.webservices
 
-import okhttp3.Interceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object NetworkManager {
-    //Creating Auth Interceptor to add api_key query in front of all the requests.
+object ApiFactory {
+
+
     private val baseURL = "https://rickandmortyapi.com/api/"
-    
+
     private fun retrofit(): Retrofit = Retrofit.Builder()
         .baseUrl(baseURL)
         .addConverterFactory(GsonConverterFactory.create())

@@ -1,6 +1,5 @@
 package com.emilien.rickandmortykotlin.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,8 +9,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import com.emilien.rickandmortykotlin.R
+import com.emilien.rickandmortykotlin.ui.cards.CardsListActivity
 import com.emilien.rickandmortykotlin.ui.registration.RegistrationFragment
 import com.emilien.rickandmortykotlin.webservices.AuthManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -21,8 +20,6 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
@@ -134,7 +131,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startCharacterListActivity() {
-        val intent = Intent(this, CharacterListActivity::class.java)
+        val intent = Intent(this, CardsListActivity::class.java)
         startActivity(intent)
     }
 
