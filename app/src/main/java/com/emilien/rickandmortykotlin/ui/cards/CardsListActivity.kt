@@ -5,6 +5,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emilien.rickandmortykotlin.entities.Example
@@ -19,20 +21,17 @@ class CardsListActivity : AppCompatActivity() {
     var page: Int = 1
     lateinit var pageTV: TextView
     lateinit var titleTV: TextView
+    private lateinit var viewModel: CardViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_list)
-
-
-        val cardViewModel = CardViewModel()
-
-
+        viewModel = ViewModelProvider(this).get(CardViewModel::class.java)
         recyclerView = findViewById(R.id.character_list_recyclerView)
-        pageTV = findViewById<TextView>(R.id.character_list_page_tV)
-        titleTV = findViewById<TextView>(R.id.character_list_title)
-        cardViewModel.loadCardsFromRepository()
-        cardViewModel.getCards().observe(this, Observer {
+        pageTV = findViewById(R.id.character_list_page_tV)
+        titleTV = findViewById(R.id.character_list_title)
+        viewModel.loadCardsFromRepository()
+        viewModel.getCards().observe(this, Observer {
             myAdapter.setData(it)
         })
         myAdapter = CardsListAdapter()

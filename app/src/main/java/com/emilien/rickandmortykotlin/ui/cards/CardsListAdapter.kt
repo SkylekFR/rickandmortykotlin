@@ -10,7 +10,7 @@ import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
 import com.squareup.picasso.Picasso
 
-class CardsListAdapter() :
+class CardsListAdapter(val viewModel: CardViewModel) :
     RecyclerView.Adapter<CardsListAdapter.CharacterHolder>() {
 
     // Provide a reference to the views for each data item

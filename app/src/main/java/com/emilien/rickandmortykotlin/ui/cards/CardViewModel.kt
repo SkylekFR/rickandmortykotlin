@@ -8,6 +8,8 @@ import com.emilien.rickandmortykotlin.webservices.CardRepository
 import kotlin.coroutines.coroutineContext
 
 class CardViewModel : ViewModel() {
+
+    var selectedCard = 0
     private var cards = MutableLiveData<List<Result>>()
 
     fun getCards() : MutableLiveData<List<Result>> {
