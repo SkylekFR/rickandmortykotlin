@@ -20,7 +20,11 @@ class CardViewModel : ViewModel() {
 
     }
 
-    fun getCard(id : Int) : Result? {
-        return cards.value?.get(id)
+    fun getCard(id : Int) : MutableLiveData<Result> {
+        val returnedValue = MutableLiveData<Result>()
+        returnedValue.value = cards.value?.find {
+            it.id == id
+        }
+        return returnedValue
     }
 }

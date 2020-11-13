@@ -11,9 +11,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
 import com.emilien.rickandmortykotlin.webservices.CardRepository
+import com.squareup.picasso.Picasso
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,6 +35,8 @@ class CardFragment() : Fragment() {
     lateinit var iconImageView: ImageView
     lateinit var popFragmentButton: Button
     var characterId = 0
+    var cardViewModel = CardViewModel()
+
 
 
     override fun onCreateView(
@@ -70,10 +74,19 @@ class CardFragment() : Fragment() {
         typeTextView = view.findViewById(R.id.fragment_character_detail_typeTextView)
         iconImageView = view.findViewById(R.id.fragment_character_detail_iconIV)
         popFragmentButton = view.findViewById(R.id.fragment_character_detail_popFragmentButton)
+
         popFragmentButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
-        CardRepository.cardList.value?.get(characterId)
+        cardViewModel.loadCardsFromRepository()
+        cardViewModel.getCard(characterId).observe(this, Observer {
+            nameTextView.text = it.name
+            speciesTextView.text = it.species
+            genderTextView.text = it.gender
+            typeTextView.text = it.type
+            Picasso.get().load(it.image).into(iconImageView)
+
+        })
     }
 
 
