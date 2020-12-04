@@ -24,9 +24,7 @@ class CardsListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_list)
 
-
         val cardViewModel = CardViewModel()
-
 
         recyclerView = findViewById(R.id.character_list_recyclerView)
         pageTV = findViewById<TextView>(R.id.character_list_page_tV)

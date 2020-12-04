@@ -20,29 +20,9 @@ object CardRepository {
     //Creating Auth Interceptor to add api_key query in front of all the requests.
     val factory = ApiFactory.rickMortyService
 
-    val cardList = MutableLiveData<List<Result>>()
-    val error = MutableLiveData<String>()
+    suspend fun fetchCardList() = factory.getCharactersList().results
 
+    suspend fun fetchCardListFromPage(page: Int) = factory.getCharacterListFromPage(page)
 
-   fun fetchCardList() {
-       factory.getCharactersList().enqueue(object : Callback<Example> {
-            override fun onResponse(
-                call: Call<Example>,
-                p1: Response<Example>
-            ) {
-                if (p1.isSuccessful) {
-                   cardList.value = p1.body().results
-                } else {
-                    Log.e("NetworkManager", "onResponse: ${p1.errorBody().string()}")
-                    //Toast.makeText(, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(p0: Call<Example>?, throwable: Throwable?) {
-                //Toast.makeText(baseContext, "Cannot retrieve data", Toast.LENGTH_SHORT).show()
-            }
-        })
-
-
-    }
+    suspend fun fetchCharacterFromId(id: Int) = factory.getCharacterFromId(id)
 }
