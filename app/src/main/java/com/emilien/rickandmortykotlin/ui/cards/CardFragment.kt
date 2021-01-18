@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
 import com.emilien.rickandmortykotlin.webservices.CardRepository
@@ -27,7 +28,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [CharacterDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CardFragment() : Fragment() {
+class CardFragment : Fragment() {
     lateinit var nameTextView: TextView
     lateinit var speciesTextView: TextView
     lateinit var typeTextView: TextView
@@ -38,12 +39,12 @@ class CardFragment() : Fragment() {
     var cardViewModel = CardViewModel()
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_character_detail, container, false)
     }
 
@@ -65,6 +66,10 @@ class CardFragment() : Fragment() {
         private const val TAG = "CharacterListActivity"
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         characterId = arguments?.getInt("CharacterID") ?: throw IllegalStateException("No ID found")
@@ -78,8 +83,9 @@ class CardFragment() : Fragment() {
         popFragmentButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
-        cardViewModel.loadCardsFromRepository()
-        cardViewModel.getCard(characterId).observe(this, Observer {
+
+
+        cardViewModel.fetchCardById(characterId).observe(viewLifecycleOwner, Observer {
             nameTextView.text = it.name
             speciesTextView.text = it.species
             genderTextView.text = it.gender

@@ -22,7 +22,7 @@ object CardRepository {
 
     suspend fun fetchCardList() = factory.getCharactersList().results
 
-    suspend fun fetchCardListFromPage(page: Int) = factory.getCharacterListFromPage(page)
+    suspend fun fetchCardListFromPage(page: Int) = factory.getCharacterListFromPage(page).results
 
     suspend fun fetchCharacterFromId(id: Int) = factory.getCharacterFromId(id)
 }

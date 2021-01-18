@@ -1,5 +1,6 @@
 package com.emilien.rickandmortykotlin.webservices
 
+import com.emilien.rickandmortykotlin.BuildConfig
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -7,7 +8,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiFactory {
 
 
-    private val baseURL = "https://rickandmortyapi.com/api/"
+    private val baseURL =  BuildConfig.BackOfficeURL
+
 
     private fun retrofit(): Retrofit = Retrofit.Builder()
         .baseUrl(baseURL)
