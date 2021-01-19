@@ -8,4 +8,5 @@
     <string name="fragment_registration_email">email</string>
     <string name="fragment_registration_title">Register</string>
     <string name="activity_main_title">Welcome in the Rick And Morty App</string>
+    <string name="activity_decks_title">Decks</string>
 </resources>

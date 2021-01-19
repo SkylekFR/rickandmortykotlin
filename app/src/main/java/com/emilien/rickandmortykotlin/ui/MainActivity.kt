@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.emilien.rickandmortykotlin.R
 import com.emilien.rickandmortykotlin.ui.cards.CardsListActivity
+import com.emilien.rickandmortykotlin.ui.decks.DecksActivity
 import com.emilien.rickandmortykotlin.ui.registration.RegistrationFragment
 import com.emilien.rickandmortykotlin.webservices.AuthManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -121,7 +122,7 @@ class MainActivity : AppCompatActivity() {
     val clickListener = View.OnClickListener { view ->
 
         when (view.getId()) {
-            R.id.activity_main_gotoappBtn -> startCharacterListActivity()
+            R.id.activity_main_gotoappBtn -> startDecksActivity()
             R.id.activity_main_signinBtn -> signIn()
             R.id.activity_main_disconnectButton -> disconnect()
             R.id.activity_main_connectButton -> connect()
@@ -130,8 +131,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun startCharacterListActivity() {
-        val intent = Intent(this, CardsListActivity::class.java)
+    private fun startDecksActivity() {
+        val intent = Intent(this, DecksActivity::class.java)
         startActivity(intent)
     }
 

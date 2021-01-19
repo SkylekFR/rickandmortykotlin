@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.decks.DecksActivity">
+
+    <TextView
+        android:id="@+id/activity_decks_titleTV"
+        style="@style/title_backgrounded"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_decks_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/activity_decks_activeDeckTV"
+        style="@style/subtitle_backgrounded"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Active Deck"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/activity_decks_titleTV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <ListView
+        android:id="@+id/activity_decks_activeDeckLV"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_decks_activeDeckTV"/>
+
+    <Button
+        android:id="@+id/activity_decks_pokedexBtn"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Pokedex"/>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

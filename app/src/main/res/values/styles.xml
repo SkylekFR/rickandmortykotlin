@@ -7,4 +7,31 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="title">
+        <item name="android:textSize">32dp</item>
+        <item name="android:textColor">#C3C3C3</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+    <style name="subtitle">
+        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">#C3C3C3</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+    <style name="title_backgrounded" parent="title">
+        <item name="android:background">#424242</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="subtitle_backgrounded" parent="subtitle">
+        <item name="android:background">#424242</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
 </resources>
