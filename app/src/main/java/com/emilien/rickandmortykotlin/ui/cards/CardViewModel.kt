@@ -2,10 +2,9 @@ package com.emilien.rickandmortykotlin.ui.cards
 
 import androidx.lifecycle.*
 import com.emilien.rickandmortykotlin.entities.Result
-import com.emilien.rickandmortykotlin.webservices.CardRepository
+import com.emilien.rickandmortykotlin.data.CardRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.coroutines.coroutineContext
 
 class CardViewModel : ViewModel() {
     private var cards = MutableLiveData<List<Result>>()
@@ -13,13 +12,16 @@ class CardViewModel : ViewModel() {
     private var showedCard = MutableLiveData<Result>();
 
     fun getCards() : MutableLiveData<List<Result>> {
+        if(cards.value == null) {
+            viewModelScope.launch(Dispatchers.IO) {
+                cards.postValue(CardRepository.fetchCardListFromPage(1))
+            }
+        }
         return cards
     }
 
     fun loadCardsFromRepository()  {
-        viewModelScope.launch(Dispatchers.IO) {
-            cards.postValue(CardRepository.fetchCardListFromPage(1))
-        }
+
 
     }
 

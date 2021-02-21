@@ -1,7 +1,6 @@
-package com.emilien.rickandmortykotlin.webservices
+package com.emilien.rickandmortykotlin.data
 
 import com.emilien.rickandmortykotlin.BuildConfig
-import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -16,5 +15,5 @@ object ApiFactory {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val rickMortyService: RickAndMortyServices = retrofit().create(RickAndMortyServices::class.java)
+    val cardService: CardServices = retrofit().create(CardServices::class.java)
 }

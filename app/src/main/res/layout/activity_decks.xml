@@ -26,11 +26,12 @@
         app:layout_constraintTop_toBottomOf="@id/activity_decks_titleTV"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_decks_activeDeckLV"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
+        tools:listitem="@layout/adapter_deck"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/activity_decks_activeDeckTV"/>

@@ -10,10 +10,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.emilien.rickandmortykotlin.R
-import com.emilien.rickandmortykotlin.ui.cards.CardsListActivity
 import com.emilien.rickandmortykotlin.ui.decks.DecksActivity
 import com.emilien.rickandmortykotlin.ui.registration.RegistrationFragment
-import com.emilien.rickandmortykotlin.webservices.AuthManager
+import com.emilien.rickandmortykotlin.data.AuthManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton

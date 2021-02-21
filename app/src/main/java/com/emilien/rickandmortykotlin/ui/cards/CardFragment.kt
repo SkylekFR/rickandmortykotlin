@@ -9,13 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
-import com.emilien.rickandmortykotlin.webservices.CardRepository
 import com.squareup.picasso.Picasso
 
 // TODO: Rename parameter arguments, choose names that match

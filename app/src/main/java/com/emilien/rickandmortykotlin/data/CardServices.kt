@@ -1,14 +1,13 @@
-package com.emilien.rickandmortykotlin.webservices
+package com.emilien.rickandmortykotlin.data
 
 import com.emilien.rickandmortykotlin.entities.Example
 import com.emilien.rickandmortykotlin.entities.Result
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 
-interface RickAndMortyServices {
+interface CardServices {
     @GET("character")
     suspend fun getCharactersList(): Example
 

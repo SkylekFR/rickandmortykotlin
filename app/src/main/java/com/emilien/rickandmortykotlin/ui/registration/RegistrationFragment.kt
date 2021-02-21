@@ -10,9 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.emilien.rickandmortykotlin.R
-import com.emilien.rickandmortykotlin.ui.MainActivity
-import com.emilien.rickandmortykotlin.webservices.AuthManager
-import kotlinx.android.synthetic.*
+import com.emilien.rickandmortykotlin.data.AuthManager
 
 class RegistrationFragment : Fragment() {
     lateinit var registerEmailEditText: EditText
