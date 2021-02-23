@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.emilien.rickandmortykotlin.R
+import kotlinx.android.synthetic.main.fragment_character_detail.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,7 +70,7 @@ class CardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         characterId = arguments?.getInt("CharacterID") ?: throw IllegalStateException("No ID found")
-        nameTextView = view.findViewById(R.id.fragment_character_detail_nameTV)
+        nameTextView = fragment_character_detail_nameTV
         speciesTextView = view.findViewById(R.id.fragment_character_detail_speciesTV)
         genderTextView = view.findViewById(R.id.fragment_character_detail_genderTextView)
         typeTextView = view.findViewById(R.id.fragment_character_detail_typeTextView)
@@ -79,7 +80,6 @@ class CardFragment : Fragment() {
         popFragmentButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
-
 
         cardViewModel.fetchCardById(characterId).observe(viewLifecycleOwner, Observer {
             nameTextView.text = it.name

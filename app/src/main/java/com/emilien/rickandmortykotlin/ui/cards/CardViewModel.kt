@@ -5,10 +5,10 @@ import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.data.CardRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 class CardViewModel : ViewModel() {
     private var cards = MutableLiveData<List<Result>>()
-
     private var showedCard = MutableLiveData<Result>();
 
     fun getCards() : MutableLiveData<List<Result>> {
@@ -18,11 +18,6 @@ class CardViewModel : ViewModel() {
             }
         }
         return cards
-    }
-
-    fun loadCardsFromRepository()  {
-
-
     }
 
 

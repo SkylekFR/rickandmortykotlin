@@ -5,16 +5,17 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emilien.rickandmortykotlin.entities.Example
 import com.emilien.rickandmortykotlin.entities.Info
 import com.emilien.rickandmortykotlin.R
+import kotlinx.android.synthetic.main.activity_character_list.*
 
 
 class CardsListActivity : AppCompatActivity() {
     var myAdapter = CardsListAdapter()
-    lateinit var recyclerView: RecyclerView
     lateinit var infos: Info
     var page: Int = 1
     lateinit var pageTV: TextView
@@ -24,18 +25,27 @@ class CardsListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_list)
 
-        val cardViewModel = CardViewModel()
 
-        recyclerView = findViewById(R.id.character_list_recyclerView)
-        pageTV = findViewById<TextView>(R.id.character_list_page_tV)
-        titleTV = findViewById<TextView>(R.id.character_list_title)
-        cardViewModel.loadCardsFromRepository()
+        val cardViewModel =  ViewModelProvider(this).get(CardViewModel::class.java)
+
+        pageTV = findViewById(R.id.character_list_page_tV)
+        titleTV = findViewById(R.id.character_list_title)
+
+
+
+        myAdapter = CardsListAdapter()
+        character_list_recyclerView.adapter = myAdapter
+        character_list_recyclerView.layoutManager = LinearLayoutManager(this)
+
+
+
+
         cardViewModel.getCards().observe(this, Observer {
             myAdapter.setData(it)
         })
-        myAdapter = CardsListAdapter()
-        recyclerView.adapter = myAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+
+
+
 
 
     }
