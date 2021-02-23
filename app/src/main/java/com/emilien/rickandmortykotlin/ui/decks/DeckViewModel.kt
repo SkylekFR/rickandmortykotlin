@@ -12,17 +12,11 @@ import kotlinx.coroutines.launch
 class DeckViewModel : ViewModel() {
     val database = DatabaseFactory.userDatabase
 
-
-
     fun insertUser(user: User) {
         viewModelScope.launch(Dispatchers.IO) {
             database.userDao().insertAll(user)
         }
 
     }
-
-
-
-
 
 }

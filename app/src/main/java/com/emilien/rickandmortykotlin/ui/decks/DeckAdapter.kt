@@ -48,19 +48,6 @@ class DeckAdapter() :
 
     override fun onBindViewHolder(holder: DeckHolder, position: Int) {
         holder.bind(myDataset[position])
-        holder.itemView.setOnClickListener {
-            val transaction =
-                (it.context as CardsListActivity).supportFragmentManager.beginTransaction()
-            transaction.setCustomAnimations(
-                android.R.anim.slide_in_left,
-                android.R.anim.slide_out_right,
-                android.R.anim.slide_in_left,
-                android.R.anim.slide_out_right
-            )
-                .replace(R.id.container, CardFragment.newInstance(myDataset[position].id))
-                .addToBackStack("DetailedCharacter")
-                .commit()
-        }
 
     }
 
