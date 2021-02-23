@@ -6,10 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class User (
-    @PrimaryKey(autoGenerate = true) val uid: Int? = 0,
     @ColumnInfo(name = "username") val username: String?,
     @ColumnInfo(name = "active_deck") val activeDeck: Deck?
 )
 {
-
+    @PrimaryKey(autoGenerate = true) var uid: Int = 0
 }

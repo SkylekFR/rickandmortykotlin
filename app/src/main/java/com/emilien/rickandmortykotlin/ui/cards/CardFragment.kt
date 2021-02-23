@@ -11,8 +11,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.emilien.rickandmortykotlin.R
-import com.squareup.picasso.Picasso
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -86,7 +86,7 @@ class CardFragment : Fragment() {
             speciesTextView.text = it.species
             genderTextView.text = it.gender
             typeTextView.text = it.type
-            Picasso.get().load(it.image).into(iconImageView)
+            Glide.with(context!!).load(it.image).into(iconImageView)
 
         })
     }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +29,7 @@ class DecksActivity : AppCompatActivity() {
     lateinit var activeDeckLV : RecyclerView
     lateinit var viewModel: DeckViewModel
     lateinit var cardViewModel: CardViewModel
+    lateinit var titleTextView : TextView
 
 
 
@@ -37,6 +39,7 @@ class DecksActivity : AppCompatActivity() {
 
 
         activeDeckLV = findViewById(R.id.activity_decks_activeDeckLV)
+        titleTextView = findViewById(R.id.activity_decks_activeDeckTitleTextView)
         DatabaseFactory.initialize(applicationContext)
         viewModel = DeckViewModel()
         cardViewModel = CardViewModel()
@@ -47,22 +50,26 @@ class DecksActivity : AppCompatActivity() {
         val cardList = ArrayList<Result>()
 
         val adapter = DeckAdapter()
-        adapter.setData(cardList)
-        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, cardList);
+
         cardViewModel.getCards().observe(this, {
             cardList.add(it[0])
             cardList.add(it[1])
             cardList.add(it[2])
-            arrayAdapter.notifyDataSetChanged()
+            cardList.add(it[3])
+            cardList.add(it[4])
+            cardList.add(it[5])
+            adapter.setData(cardList)
+            adapter.notifyDataSetChanged()
         })
 
-        val deck = Deck(1, "First Deck", cardList)
+        val deck = Deck("First Deck", cardList)
 
 
-        viewModel.insertUser(User(1, "test", deck))
-
+        viewModel.insertUser(User("test", deck))
+        titleTextView.setText(deck.name)
 
         activeDeckLV.adapter = adapter
+
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         activeDeckLV.layoutManager = layoutManager

@@ -7,10 +7,10 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
 import com.emilien.rickandmortykotlin.entities.Deck
-import com.squareup.picasso.Picasso
 
 class DeckAdapter() :
     RecyclerView.Adapter<DeckAdapter.DeckHolder>() {
@@ -26,7 +26,8 @@ class DeckAdapter() :
         fun bind(card: Result) {
             itemView.findViewById<TextView>(R.id.adapter_deck_cardName).text =
                 card.name
-            Picasso.get().load(card.image)
+
+                        Glide.with(itemView).load(card.image).circleCrop()
                 .into(itemView.findViewById<ImageView>(R.id.adapter_deck_imageView))
         }
 

@@ -31,11 +31,21 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="6"
         tools:listitem="@layout/adapter_deck"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/activity_decks_activeDeckTV"/>
 
+    <TextView
+        android:id="@+id/activity_decks_activeDeckTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="loading..."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_decks_activeDeckLV" />
     <Button
         android:id="@+id/activity_decks_pokedexBtn"
         style="@style/Widget.AppCompat.Button.Borderless"

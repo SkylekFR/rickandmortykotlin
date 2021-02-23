@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.emilien.rickandmortykotlin.entities.Result
 import com.emilien.rickandmortykotlin.R
-import com.squareup.picasso.Picasso
 
 class CardsListAdapter() :
     RecyclerView.Adapter<CardsListAdapter.CharacterHolder>() {
@@ -24,7 +24,7 @@ class CardsListAdapter() :
         fun bind(text: String, image: String) {
             itemView.findViewById<TextView>(R.id.character_list_adapter_title).text =
                 text
-            Picasso.get().load(image)
+            Glide.with(itemView).load(image)
                 .into(itemView.findViewById<ImageView>(R.id.character_list_adapter_icon))
         }
 
